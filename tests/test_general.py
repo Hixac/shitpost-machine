@@ -22,18 +22,18 @@ def test_get_post():
 
     try:
         _ = sub.get_newest_post()
-    except PostNotFound as e:
+    except PostNotFound:
         assert True
-    except Exception as e:
+    except Exception:
         assert False
 
     chn = Channel("beobanka")
 
     try:
         _ = chn.get_newest_post()
-    except PostNotFound as e:
+    except PostNotFound:
         assert True
-    except Exception as e:
+    except Exception:
         assert False
 
 

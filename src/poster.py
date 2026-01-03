@@ -4,7 +4,7 @@ from .factory import SourceCollection
 from .wrappers.vk import wall_post, upload_photo
 from .core.appdata import get_appdata
 from .core.utility import pause
-from .core.logger import logging # pyright: ignore
+from .core.logger import logging  # pyright: ignore
 
 
 LOGGER = logging.getLogger(__file__)
