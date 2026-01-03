@@ -1,9 +1,13 @@
 from datetime import datetime
 
 from .factory import SourceCollection
-from .core.appdata import get_appdata
 from .wrappers.vk import wall_post, upload_photo
+from .core.appdata import get_appdata
 from .core.utility import pause
+from .core.logger import logging # pyright: ignore
+
+
+LOGGER = logging.getLogger(__file__)
 
 
 ONE_HOUR = 60 * 60
@@ -25,7 +29,7 @@ def make_new_posts_indefinitely(sources: SourceCollection):
         try:
             path = source.get_newest_post()
         except Exception as e:
-            print(f"Failed at {e}")
+            LOGGER.exception(f"Failed while getting newest post with error: {e}")
             continue
 
         date = source.get_date_of_last_post()
@@ -33,13 +37,12 @@ def make_new_posts_indefinitely(sources: SourceCollection):
             continue
 
         get_appdata().add_memes(one=date)
-        get_appdata().inc_index()
 
         try:
             photo = upload_photo(str(path))
             wall_post(msg="", attachments=photo)
         except Exception as e:
-            print(f"VK failure at {e}")
+            LOGGER.exception(f"Failed while using VK api with error: {e}")
             continue
 
-        print("Successfully posted!")
+        LOGGER.info("Successfully posted!")

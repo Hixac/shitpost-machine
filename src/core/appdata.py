@@ -12,7 +12,6 @@ FULL_FILENAME = settings.WHERE_TO_SAVE_FILES / "appdata.json"
 
 class _AppInformation(BaseModel):
     serialization_time: datetime | None = Field(description="Tracks serializations of model")
-    last_index: int
     posted_memes: list[datetime]
 
     @field_serializer("serialization_time")
@@ -27,10 +26,6 @@ class AppInformation:
     def last_serialization_time(self) -> datetime | None:
         return self._appdata.serialization_time
 
-    @property
-    def last_index(self) -> int:
-        return self._appdata.last_index
-
     def __init__(
         self,
         posted_memes: list[datetime] | None = None
@@ -43,7 +38,7 @@ class AppInformation:
 
         if posted_memes is None:
             posted_memes = []
-        self._appdata = _AppInformation(serialization_time=None, last_index=0, posted_memes=posted_memes)
+        self._appdata = _AppInformation(serialization_time=None, posted_memes=posted_memes)
 
     def _save(self):
         self._appdata.serialization_time = datetime.now()
@@ -56,11 +51,6 @@ class AppInformation:
 
     def is_this_meme_been(self, one: datetime) -> bool:
         return one in self._appdata.posted_memes
-
-    def inc_index(self):
-        self._appdata.last_index += 1
-
-        self._save()
 
     def add_memes(
         self,
@@ -88,8 +78,6 @@ def create_global_instance():
         _appdata = AppInformation()
     else:
         raise Exception("Appdata already created!")
-
-    return _appdata
 
 
 def get_appdata():

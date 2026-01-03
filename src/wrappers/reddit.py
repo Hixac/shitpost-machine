@@ -38,7 +38,9 @@ class Subreddit:
         posts = subreddit.hot(limit=10)
 
         for post in posts:
-            if post.over_18:
+            extension = post.url.split(".")[-1]
+            if post.over_18 or post.stickied or \
+            (extension != "jpg" and extension != "png" and extension != "jpeg"):
                 continue
 
             self._date = datetime.fromtimestamp(post.created_utc)

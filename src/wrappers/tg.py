@@ -25,10 +25,10 @@ def _get_client():
 
 
 def get_channels_from_folder() -> list[int]:
-    folders = _get_client()(functions.messages.GetDialogFiltersRequest()).filters[1:] 
-    peers = next(fld for fld in folders if fld.title.text == "МЕМЫ").include_peers
-    channels = [peer.channel_id for peer in peers]
-    return channels
+    folders = _get_client()(functions.messages.GetDialogFiltersRequest()).filters[1:] # pyright: ignore
+    peers = next(fld for fld in folders if fld.title.text == "МЕМЫ").include_peers # pyright: ignore
+    channels = [peer.channel_id for peer in peers] # pyright: ignore
+    return channels # pyright: ignore
 
 class Channel:
     @property
@@ -54,10 +54,10 @@ class Channel:
         return self._date
 
     def get_newest_post(self) -> str:
-        for msg in _get_client().iter_messages(self._identifier, limit=100):
-            if not msg.fwd_from and msg.photo is not None:
-                self._date = msg.date
-                return msg.download_media(file=SIMPLE_FILENAME)
+        for msg in _get_client().iter_messages(self._identifier, limit=100): # pyright: ignore
+            if not msg.fwd_from and msg.photo is not None: # pyright: ignore
+                self._date = msg.date # pyright: ignore
+                return msg.download_media(file=SIMPLE_FILENAME) # pyright: ignore
 
         raise PostNotFound("Can't find any post in apparently empty channel.")
 
