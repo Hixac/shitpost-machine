@@ -36,13 +36,13 @@ def make_new_posts_indefinitely(sources: SourceCollection):
         if date is not None and get_appdata().is_this_meme_been(date):
             continue
 
-        get_appdata().add_memes(one=date)
-
         try:
             photo = upload_photo(str(path))
             wall_post(msg="", attachments=photo)
         except Exception as e:
             LOGGER.exception(f"Failed while using VK api with error: {e}")
             continue
+
+        get_appdata().add_memes(one=date)
 
         LOGGER.info("Successfully posted!")
