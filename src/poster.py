@@ -5,7 +5,7 @@ from .wrappers.vk import wall_post, upload_photo
 from .core.appdata import get_appdata
 from .core.utility import pause
 from .core.logger import logging  # pyright: ignore
-
+from .core.exceptions import ShitpostConnectionError
 
 LOGGER = logging.getLogger(__file__)
 
@@ -39,6 +39,9 @@ def make_new_posts_indefinitely(sources: SourceCollection):
         try:
             photo = upload_photo(str(path))
             wall_post(msg="", attachments=photo)
+        except ShitpostConnectionError as e:
+            LOGGER.exception("Failed while using VK api with error: connection reset by peer")
+            continue
         except Exception as e:
             LOGGER.exception(f"Failed while using VK api with error: {e}")
             continue

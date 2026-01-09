@@ -1,3 +1,4 @@
+from requests.exceptions import ConnectionError
 
 
 class BaseException(Exception):
@@ -5,4 +6,8 @@ class BaseException(Exception):
 
 
 class PostNotFound(BaseException):
+    pass
+
+
+class ShitpostConnectionError(ConnectionError):
     pass

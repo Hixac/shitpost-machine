@@ -10,7 +10,8 @@ def main():
 
     sources = SourceCollection()
 
-    sources.add_subreddit("AzumangaPosting", priority=3)
+    sources.add_subreddit("AzumangaPosting", priority=4)
+    sources.add_subreddit("chiikawa_", priority=4)
     sources.add_subreddit("Asia_irl", priority=3)
     sources.add_subreddit("twittermoment", priority=3)
     sources.add_subreddit("WojakCompass", priority=3)
