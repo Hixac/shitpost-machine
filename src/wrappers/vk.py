@@ -7,7 +7,7 @@ from ..core.config import settings
 
 USER_TOKEN = settings.USER_TOKEN
 GROUP_ID = settings.GROUP_ID
-WEEK_IN_SECONDS = 60 * 60 * 24 * 7
+DELAY_IN_POSTING = 60 * 60 * 24 * 3
 
 
 _session = vk_api.VkApi(token=USER_TOKEN)
@@ -19,7 +19,7 @@ def _get_session() -> vk_api.VkApi:
 
 def wall_post(msg: str, attachments: str) -> None:
     _get_session().method("wall.post", {"owner_id": GROUP_ID, "message": msg, "attachments": attachments, \
-                   "publish_date": datetime.now().timestamp() + WEEK_IN_SECONDS})
+                   "publish_date": datetime.now().timestamp() + DELAY_IN_POSTING})
 
 
 def upload_photo(direc: str | list[str]) -> str:

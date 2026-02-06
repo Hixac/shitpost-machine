@@ -28,9 +28,6 @@ def make_new_posts_indefinitely(sources: SourceCollection):
 
         try:
             path = source.get_newest_post()
-        except ConnectionResetError:
-            LOGGER.exception("Failed while getting newest post with error: connection reset by peer")
-            continue
         except Exception as e:
             LOGGER.exception(f"Failed while getting newest post with error: {e}")
             continue
@@ -42,9 +39,6 @@ def make_new_posts_indefinitely(sources: SourceCollection):
         try:
             photo = upload_photo(str(path))
             wall_post(msg="", attachments=photo)
-        except ConnectionResetError:
-            LOGGER.exception("Failed while using VK api with error: connection reset by peer")
-            continue
         except Exception as e:
             LOGGER.exception(f"Failed while using VK api with error: {e}")
             continue
